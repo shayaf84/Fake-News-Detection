@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<meta charset="utf-8">
+
+
+	<title>	Fake News </title>
+
+	<style>
+
+		body {
+
+			margin:  0;
+			font-family: 'PT Sans';
+
+		}
+		h1  {
+			padding: 15px;
+			color:azure;
+			margin-top: 0px;
+			text-align: center;
+
+		}
+
+
+		h3 {
+
+			color: azure;
+			text-align: center;
+
+		}
+
+		div.header {
+
+			background-color: blue;
+    		position:sticky;
+    		top:0;
+    		width:100%;
+    		z-index:100;
+
+		}
+
+
+		p {
+
+			padding:  15px;
+
+		}
+
+		p.title {
+			display:  inline-block;
+		}
+
+		form {
+			display:  inline-block;
+		}
+
+		p.result {
+			display: inline-block;
+		}
+
+
+	</style>
+
+
+
+</head>
+<body>
+
+	<div class="header"> 
+
+	<h1> Fake News Detector </h1>
+	
+
+	<h3> Shaya Farahmand </h3>
+	<br>
+
+	</div>
+	
+	<p> This web app allows you to input a title of a news article, and returns a classification of real news or fake news </p>
+	
+
+
+	<p class="title"> Enter Title: </p>
+
+	
+
+	<form action="/sub" method="POST">
+		<input type = "text" name="news">
+		
+		
+		<select name='modelType'> 
+			<option value='dense'> Gensim Doc2Vec + ANN</option>
+			<option value='lstm'> Tensorflow_hub Word2Vec + LSTM</option>
+			<option value ='bert'> BERT </option>
+		</select>
+		<input type="submit"> 
+	</form> 
+
+	<br>
+	{%if official %}
+		<p class="result"> News is: </p> {{official}}
+
+		
+	{% endif %}
+
+	{% if con %}
+		<br>
+		<p class="result"> Probability is: </p> {{con}}
+	{% endif %} 
+
+</body>
+</html>
