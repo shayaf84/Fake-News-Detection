@@ -89,17 +89,8 @@ def submit():
             minStop.append(i)
 
     
-    if modelType == 'dense':
-        #Doc2Vec tags
-        tag = [TaggedDocument(minStop,[0])]
-
-        predVec = [doc.infer_vector(minStop)]
-        predVec = np.array(predVec)
-        
-        
-
-        results = model.predict(predVec)
-    elif modelType == 'lstm':
+    
+    if modelType == 'lstm':
         
         val = []
 
