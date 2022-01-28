@@ -28,10 +28,10 @@ nltk.download('stopwords')
 
 app = Flask(__name__)
 
-model = pickle.load(open('model.pkl','rb'))
+#model = pickle.load(open('model.pkl','rb'))
 lstm = pickle.load(open('lstm.pkl','rb'))
 bert = joblib.load('bert (1).pkl')
-doc = pickle.load(open('doc.pkl','rb'))
+#doc = pickle.load(open('doc.pkl','rb'))
 word2vec = hub.load("https://tfhub.dev/google/Wiki-words-250/2")
 
 #bert_preprocess = hub.KerasLayer("https://tfhub.dev/tensorflow/bert_en_uncased_preprocess/3")
