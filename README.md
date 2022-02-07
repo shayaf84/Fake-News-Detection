@@ -1,6 +1,6 @@
 Detecting Fake News
 
-Folders:
+<b> Folders: </b>
 
 Models:
 
