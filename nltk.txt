@@ -1,3 +1,0 @@
-punkt
-wordnet
-stopwords
