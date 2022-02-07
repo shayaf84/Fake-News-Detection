@@ -1,4 +1,4 @@
-<p style='font-size': 24pt> Detecting Fake News </p>
+<p style=""> Detecting Fake News </p>
 
 <b> Folders: </b>
 
