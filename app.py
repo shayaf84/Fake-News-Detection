@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request
 import numpy as np 
 import pandas as pd
-#from gensim.models import Doc2Vec
-#from gensim.models.doc2vec import TaggedDocument
+from gensim.models import Doc2Vec
+from gensim.models.doc2vec import TaggedDocument
 import string
 import nltk
 from nltk.corpus import stopwords
@@ -14,6 +14,9 @@ import tensorflow_hub as hub
 import ssl
 import tensorflow_text as text
 import joblib
+from flask_ngrok import run_with_ngrok
+
+
 try:
     _create_unverified_https_context = ssl._create_unverified_context
 except AttributeError:
@@ -27,15 +30,15 @@ nltk.download('stopwords')
 
 
 app = Flask(__name__)
-
-#model = pickle.load(open('model.pkl','rb'))
-lstm = pickle.load(open('lstm.pkl','rb'))
-bert = joblib.load('bert (1).pkl')
-#doc = pickle.load(open('doc.pkl','rb'))
+run_with_ngrok(app)
+model = pickle.load(open('model.pkl','rb'))
+lstm = pickle.load(open('lstm (2).pkl','rb'))
+bert = joblib.load('bert.pkl')
+doc = pickle.load(open('doc.pkl','rb'))
 word2vec = hub.load("https://tfhub.dev/google/Wiki-words-250/2")
 
-#bert_preprocess = hub.KerasLayer("https://tfhub.dev/tensorflow/bert_en_uncased_preprocess/3")
-#bert_encoder = hub.KerasLayer('https://tfhub.dev/tensorflow/bert_en_uncased_L-12_H-768_A-12/4')
+bert_preprocess = hub.KerasLayer("https://tfhub.dev/tensorflow/bert_en_uncased_preprocess/3")
+bert_encoder = hub.KerasLayer('https://tfhub.dev/tensorflow/bert_en_uncased_L-12_H-768_A-12/4')
 
 @app.route("/")
 
@@ -89,8 +92,17 @@ def submit():
             minStop.append(i)
 
     
-    
-    if modelType == 'lstm':
+    if modelType == 'dense':
+        #Doc2Vec tags
+        tag = [TaggedDocument(minStop,[0])]
+
+        predVec = [doc.infer_vector(minStop)]
+        predVec = np.array(predVec)
+        
+        
+
+        results = model.predict(predVec)
+    elif modelType == 'lstm':
         
         val = []
 
@@ -126,4 +138,4 @@ def submit():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
