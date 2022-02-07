@@ -1,5 +1,3 @@
-<p style=""> Detecting Fake News </p>
-
 <b> Folders: </b>
 
 <i> Models: </i>
