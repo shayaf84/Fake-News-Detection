@@ -28,9 +28,11 @@ nltk.download('punkt')
 nltk.download('wordnet')
 nltk.download('stopwords')
 
-
+#Initializing the Flask app and running with ngrok
 app = Flask(__name__)
 run_with_ngrok(app)
+
+#Uploading the models and storing in variables
 model = pickle.load(open('model.pkl','rb'))
 lstm = pickle.load(open('lstm (2).pkl','rb'))
 bert = joblib.load('bert.pkl')
@@ -42,12 +44,14 @@ bert_encoder = hub.KerasLayer('https://tfhub.dev/tensorflow/bert_en_uncased_L-12
 
 @app.route("/")
 
+# Displaying front end
 def hello():
     return render_template('index.html')
 
 
 @app.route('/sub', methods=["POST"])
 
+#Retrieving submission with 'POST' and storing the name and model_type
 def submit():
     if request.method == 'POST':
         name = request.form['news']
@@ -91,7 +95,7 @@ def submit():
         if i not in stop:
             minStop.append(i)
 
-    
+    #If the model is a dense network, infer Doc2Vec predictions and pass the vectors into the dense model. Store results in a variable
     if modelType == 'dense':
         #Doc2Vec tags
         tag = [TaggedDocument(minStop,[0])]
@@ -102,6 +106,7 @@ def submit():
         
 
         results = model.predict(predVec)
+    #If the model is an LSTM network, infer Word2Vec predictions and pass the vectors into the lstm model. Store results in a variable
     elif modelType == 'lstm':
         
         val = []
@@ -113,6 +118,7 @@ def submit():
 
         val = np.array(val)
         results = lstm.predict(val)
+    #If the model is a BERT model, pass the raw text into the BERT pipeline, as preprocessing is included there. Store results in a variable
     elif modelType == 'bert':
        
         results = bert.predict([name])
@@ -120,15 +126,15 @@ def submit():
         
 
 
-
+    #Index into results. If probability is greater than 0.5, fake news. Else, real news.
     conVal = results[0][0]
-
+    
     if results[0][0] >= 0.5:
         results = "Fake"
         
     else:
         results = "True"
-        
+    #Convert probability to percentages and display on the front-end
     conVal *=100 
     conVal = round(conVal,3)
     conVal = str(conVal) + ' %'
