@@ -21,4 +21,4 @@ app.py - Back end programmed in Flask
 <b> One will need to download all the models in the Models folder for use in app.py. File sizes are large as SOTA models have larger parameters </b>
 
 
-
+<img width="1440" alt="Screen Shot 2022-02-07 at 10 45 57 PM" src="https://user-images.githubusercontent.com/68475848/158228232-7d75b872-6d45-43df-a0f2-748968791309.png">
