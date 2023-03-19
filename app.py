@@ -34,7 +34,7 @@ run_with_ngrok(app)
 
 #Uploading the models and storing in variables
 model = pickle.load(open('model.pkl','rb'))
-lstm = pickle.load(open('lstm (2).pkl','rb'))
+lstm = pickle.load(open('lstm.pkl','rb'))
 bert = joblib.load('bert.pkl')
 doc = pickle.load(open('doc.pkl','rb'))
 word2vec = hub.load("https://tfhub.dev/google/Wiki-words-250/2")
